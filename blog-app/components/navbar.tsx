@@ -26,6 +26,7 @@ import {
   Logo,
 } from "@/components/icons";
 import { PlaceholdersAndVanishInput } from "./placeholders-and-vanish-input";
+import { SignedOut, SignInButton, SignedIn, UserButton } from "@clerk/nextjs";
 
 const placeholders = [
   "What is an operating system?",
@@ -69,6 +70,12 @@ export const Navbar = () => {
             <p className="text-[23px] font-extralight text-black">Buffer</p>
           </NextLink>
         </NavbarBrand>
+        <SignedOut>
+          <SignInButton />
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
         <ul className="hidden lg:flex gap-4 justify-start ml-2 ">
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href} className="">
@@ -126,7 +133,7 @@ export const Navbar = () => {
         <div className="mx-4 mt-2 flex flex-col gap-2 ">
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
-              <Link 
+              <Link
                 color={
                   index === 2
                     ? "primary"
