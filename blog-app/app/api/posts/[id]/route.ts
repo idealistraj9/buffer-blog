@@ -64,3 +64,30 @@ export const PUT = async (request: Request, { params }: { params: { id: string }
     return new NextResponse("Database Error", { status: 500 });
   }
 };
+export const DELETE = async (request, { params: { id } }) => {
+  const { userId } = auth();
+
+  if (!userId) {
+    return new NextResponse("Unauthorized", { status: 401 });
+  }
+
+  try {
+    await connect();
+    const post = await Post.findById(id);
+
+    if (!post) {
+      return new NextResponse("Post not found", { status: 404 });
+    }
+
+    if (post.authorId !== userId) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    await post.delete();
+
+    return new NextResponse("Post deleted", { status: 200 });
+  } catch (error) {
+    console.error("Error deleting post:", error);
+    return new NextResponse("Database Error", { status: 500 });
+  }
+};

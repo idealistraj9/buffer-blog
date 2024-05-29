@@ -51,9 +51,9 @@ const Home = () => {
           <li>No posts found</li>
         )}
       </ul>
-      <Link href="/write/new">
+      {/* <Link href="/write/new">
         Create New Post
-      </Link>
+      </Link> */}
     </>
   );
 };

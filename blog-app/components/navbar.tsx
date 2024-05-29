@@ -10,7 +10,7 @@ import {
 } from "@nextui-org/navbar";
 import { Button } from "@nextui-org/button";
 import { Kbd } from "@nextui-org/kbd";
-import { Link } from "@nextui-org/link";
+// import { Link } from "@nextui-org/link";
 import { Input } from "@nextui-org/input";
 import { link as linkStyles } from "@nextui-org/theme";
 import NextLink from "next/link";
@@ -27,6 +27,7 @@ import {
 } from "@/components/icons";
 import { PlaceholdersAndVanishInput } from "./placeholders-and-vanish-input";
 import { SignedOut, SignInButton, SignedIn, UserButton } from "@clerk/nextjs";
+import Link from "next/link";
 
 const placeholders = [
   "What is an operating system?",
@@ -76,6 +77,8 @@ export const Navbar = () => {
         <SignedIn>
           <UserButton />
         </SignedIn>
+        <Link href="/write/new" className="text-secondary">Create New Post</Link>
+        <Link href="/user/blogs" className="text-secondary">My Blogs</Link>
         <ul className="hidden lg:flex gap-4 justify-start ml-2 ">
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href} className="">
