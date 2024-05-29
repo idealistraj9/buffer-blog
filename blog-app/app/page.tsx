@@ -25,7 +25,7 @@ export default function Home() {
       <div className="mt-12">
         <Snippet hideCopyButton hideSymbol className="bg-transparent text-black">
           <span>
-            Created By <Code color="danger"><span className="font-extrabold">Idealistraj09 with 💘</span></Code>
+            Created By <Code color="danger"><span className="font-extrabold"><a href="">Idealistraj09 with 💘</a></span></Code>
           </span>
         </Snippet>
       </div>
