@@ -4,8 +4,8 @@ export default function BlogLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-      <div className="inline-block max-w-lg text-center justify-center">
+    <section className="flex flex-col h-full  items-center justify-center  w-full  ">
+      <div className="flex  text-center justify-center w-full h-full p-5 overflow-auto">
         {children}
       </div>
     </section>

@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { Card, CardFooter, Image, CardBody } from "@nextui-org/react";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -15,7 +16,7 @@ const Home = () => {
           throw new Error('Failed to fetch posts');
         }
         const data = await res.json();
-        console.log('Fetched posts:', data); 
+        console.log('Fetched posts:', data);
         setPosts(data);
       } catch (error) {
         console.log(error);
@@ -37,23 +38,33 @@ const Home = () => {
 
   return (
     <>
-      <h1>Blog Posts</h1>
-      <ul>
+      <div className="gap-2 grid grid-cols-2 sm:grid-cols-5">
         {Array.isArray(posts) && posts.length > 0 ? (
-          posts.map(post => (
-            <li key={post._id}>
-              <Link href={`/write/${post._id}`}>
-                {post.title}
-              </Link>
-            </li>
+          posts.map((post) => (
+            <Link href={`/posts/${post._id}`} passHref key={post._id} className=' h-[70%] m-0 p-0'>
+              <Card shadow="sm" isPressable className="m-1 w-[100%] h-[100%] ">
+                <CardBody className="overflow-visible p-0">
+                  <Image
+                    shadow="sm"
+                    radius="lg"
+                    width="100%"
+                    alt={post.title}
+                    className="w-full object-cover h-[140px]"
+                    src={post.img}
+                  />
+                </CardBody>
+                <CardFooter className="text-small justify-between">
+                  <b>{post.title}</b>
+                  {/* <p className="text-default-500">{post.desc || "No description available"}</p> */}
+                </CardFooter>
+              </Card>
+            </Link>
           ))
         ) : (
-          <li>No posts found</li>
+          <div className="col-span-full text-center py-4">No posts found</div>
         )}
-      </ul>
-      {/* <Link href="/write/new">
-        Create New Post
-      </Link> */}
+      </div>
+
     </>
   );
 };

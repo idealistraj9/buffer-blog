@@ -83,7 +83,7 @@ export const DELETE = async (request, { params: { id } }) => {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    await post.delete();
+    await Post.findByIdAndDelete(id); // Use findByIdAndDelete to delete the post
 
     return new NextResponse("Post deleted", { status: 200 });
   } catch (error) {
