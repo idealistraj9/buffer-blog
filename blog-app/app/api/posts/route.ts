@@ -64,7 +64,7 @@ export const GET = async () => {
   }
 };
 
-export const POST = async (request) => {
+export const POST = async (request:any) => {
   try {
     const { userId } = await auth();
 

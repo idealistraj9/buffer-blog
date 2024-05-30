@@ -4,7 +4,9 @@ import connect from "@/utils/db";
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
-export const GET = async (request, { params: { id } }) => {
+type ParamsType = { id: string };
+
+export const GET = async (request: any, { params: { id } }: { params: ParamsType }) => {
   try {
     await connect();
     const post = await Post.findById(id);
@@ -64,7 +66,7 @@ export const PUT = async (request: Request, { params }: { params: { id: string }
     return new NextResponse("Database Error", { status: 500 });
   }
 };
-export const DELETE = async (request, { params: { id } }) => {
+export const DELETE = async (request: any, { params: { id } }: { params: ParamsType }) => {
   const { userId } = auth();
 
   if (!userId) {

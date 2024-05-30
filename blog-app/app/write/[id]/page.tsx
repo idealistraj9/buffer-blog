@@ -1,15 +1,29 @@
 'use client';
-
 import { useEffect, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
+ 
 
-const EditPost = ({ params }) => {
+interface Post {
+  title: string;
+  img: string;
+  content: string;
+  username: string;
+  desc?: string; 
+}
+
+interface EditPostProps {
+  params: {
+    id: string;
+  };
+}
+
+const EditPost = ({ params }: EditPostProps) => {
   const { id } = params;
   const { user } = useUser();
-  const [post, setPost] = useState(null);
+  const [post, setPost] = useState<Post | null>(null); 
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -22,14 +36,19 @@ const EditPost = ({ params }) => {
           }
           const data = await res.json();
           console.log(data.authorId, user.id);
-          if (data.authorId !== user.id) {
+          if (data.authorId!== user.id) {
             setError('You do not have permission to edit this post');
           } else {
             setPost(data);
           }
           setLoading(false);
         } catch (error) {
-          setError(error.message);
+          if (error instanceof Error) {
+            setError(error.message);
+          } else {
+            console.error('An unexpected error occurred:', error);
+            setError('An unexpected error occurred');
+          }
           setLoading(false);
         }
       };
@@ -38,8 +57,12 @@ const EditPost = ({ params }) => {
     }
   }, [id, user]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!post) {
+      console.error('Post is null');
+      return;
+    }
     const body = {
       title: post.title,
       content: post.content,
@@ -75,53 +98,14 @@ const EditPost = ({ params }) => {
     return <div>Error: {error}</div>;
   }
 
+  if (!post) {
+    return <div>No post found.</div>;
+  }
+
   return (
     <div>
       <h1>Edit Post</h1>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="title">Title:</label>
-          <input
-            type="text"
-            id="title"
-            value={post.title}
-            onChange={(e) => setPost({ ...post, title: e.target.value })}
-          />
-        </div>
-        <div>
-          <label htmlFor="content">Content:</label>
-          <textarea
-            id="content"
-            value={post.content}
-            onChange={(e) => setPost({ ...post, content: e.target.value })}
-          />
-        </div>
-        <div>
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={post.username}
-            onChange={(e) => setPost({ ...post, username: e.target.value })}
-          />
-        </div>
-        <div>
-          <label htmlFor="img">Image URL:</label>
-          <input
-            type="text"
-            id="img"
-            value={post.img}
-            onChange={(e) => setPost({ ...post, img: e.target.value })}
-          />
-        </div>
-        <div>
-          <label htmlFor="desc">Description:</label>
-          <textarea
-            id="desc"
-            value={post.desc}
-            onChange={(e) => setPost({ ...post, desc: e.target.value })}
-          />
-        </div>
         <button type="submit">Update Post</button>
       </form>
     </div>
