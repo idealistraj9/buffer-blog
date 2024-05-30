@@ -3,10 +3,18 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@clerk/nextjs';
 
+interface Post {
+  _id: string;
+  title: string;
+  img: string;
+  content: string;
+  username: string;
+}
+
 const UserBlogs = () => {
-  const [posts, setPosts] = useState([]);
+  const [post, setPost] = useState<Array<Post> | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
   const { userId } = useAuth();
 
   useEffect(() => {
@@ -17,9 +25,13 @@ const UserBlogs = () => {
           throw new Error('Failed to fetch user posts');
         }
         const data = await res.json();
-        setPosts(data);
+        setPost(data);
       } catch (error) {
-        setError(error.message);
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError(`An unknown error occurred: ${error}`);
+        }
       } finally {
         setLoading(false);
       }
@@ -42,8 +54,8 @@ const UserBlogs = () => {
     <div className="container mx-auto px-4">
       <h1 className="text-2xl font-bold mt-8 mb-4">My Blogs</h1>
       <ul>
-        {Array.isArray(posts) && posts.length > 0 ? (
-          posts.map(post => (
+        {Array.isArray(post) && post.length > 0 ? (
+          post.map(post => (
             <li key={post._id} className="mb-4 bg-secondary p-5 rounded-lg text-lg">
               <Link href={`/write/${post._id}`}>
                 {post.title}
@@ -63,7 +75,7 @@ const UserBlogs = () => {
     </div>
   );
 
-  async function handleDelete(id) {
+  async function handleDelete(id: any) {
     try {
       const res = await fetch(`/api/posts/${id}`, {
         method: 'DELETE',
@@ -71,11 +83,24 @@ const UserBlogs = () => {
       if (!res.ok) {
         throw new Error('Failed to delete post');
       }
-      setPosts(posts.filter(post => post._id !== id));
+      setPost((prevPosts) => {
+        if (prevPosts === null) {
+          return [];
+        } else {
+          return prevPosts.filter(p => p._id !== id);
+        }
+      });
     } catch (error) {
-      setError(error.message);
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError(`An unknown error occurred: ${error}`);
+      }
     }
   }
+
+
+
 };
 
 export default UserBlogs;

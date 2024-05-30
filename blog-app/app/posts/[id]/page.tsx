@@ -2,11 +2,18 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 
+interface Post {
+  title: string;
+  img: string;
+  content: string;
+  username: string;
+}
+
 const Post = () => {
   const { id } = useParams();
-  const [post, setPost] = useState(null);
+  const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null); 
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!id) return;
@@ -19,7 +26,12 @@ const Post = () => {
         const data = await res.json();
         setPost(data);
       } catch (error) {
-        setError(error.message);
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          // Fallback for non-Error cases, e.g., network errors
+          setError(`An unknown error occurred: ${error}`);
+        }
       } finally {
         setLoading(false);
       }

@@ -3,8 +3,15 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Card, CardFooter, Image, CardBody } from "@nextui-org/react";
 
+interface Post {
+  title: string;
+  img: string;
+  content: string;
+  username: string;
+}
+
 const Home = () => {
-  const [posts, setPosts] = useState([]);
+  const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -17,7 +24,7 @@ const Home = () => {
         }
         const data = await res.json();
         console.log('Fetched posts:', data);
-        setPosts(data);
+        setPost(data);
       } catch (error) {
         console.log(error);
       } finally {
@@ -39,8 +46,8 @@ const Home = () => {
   return (
     <>
       <div className="gap-2 grid grid-cols-2 sm:grid-cols-5">
-        {Array.isArray(posts) && posts.length > 0 ? (
-          posts.map((post) => (
+        {Array.isArray(post) && post.length > 0 ? (
+          post.map((post) => (
             <Link href={`/posts/${post._id}`} passHref key={post._id} className=' h-[70%] m-0 p-0'>
               <Card shadow="sm" isPressable className="m-1 w-[100%] h-[100%] ">
                 <CardBody className="overflow-visible p-0">
