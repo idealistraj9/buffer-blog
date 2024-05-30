@@ -2,14 +2,13 @@
 import { useEffect, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
- 
 
 interface Post {
   title: string;
   img: string;
   content: string;
   username: string;
-  desc?: string; 
+  desc?: string;
 }
 
 interface EditPostProps {
@@ -21,7 +20,7 @@ interface EditPostProps {
 const EditPost = ({ params }: EditPostProps) => {
   const { id } = params;
   const { user } = useUser();
-  const [post, setPost] = useState<Post | null>(null); 
+  const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
@@ -35,7 +34,6 @@ const EditPost = ({ params }: EditPostProps) => {
             throw new Error('Failed to fetch post');
           }
           const data = await res.json();
-          console.log(data.authorId, user.id);
           if (data.authorId!== user.id) {
             setError('You do not have permission to edit this post');
           } else {
@@ -103,10 +101,59 @@ const EditPost = ({ params }: EditPostProps) => {
   }
 
   return (
-    <div>
-      <h1>Edit Post</h1>
-      <form onSubmit={handleSubmit}>
-        <button type="submit">Update Post</button>
+    <div className="w-full mx-auto my-20">
+      <h1 className="text-4xl font-semibold mb-8">Edit Post</h1>
+      {error && <p className="text-red-600 mb-6">{error}</p>}
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div>
+          <label htmlFor="title" className="font-semibold text-xl block text-secondary">Title:</label>
+          <input
+            id="title"
+            value={post?.title || ''}
+            onChange={(e) => setPost({...post!, title: e.target.value })}
+            className="p-5 bg-primary mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          />
+        </div>
+        <div>
+          <label htmlFor="content" className="font-semibold text-xl block text-secondary">Content:</label>
+          <textarea
+            id="content"
+            value={post?.content || ''}
+            onChange={(e) => setPost({...post!, content: e.target.value })}
+            rows={10}
+            className="p-5 bg-primary mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          />
+        </div>
+        <div>
+          <label htmlFor="username" className="font-semibold text-xl block text-secondary">Username:</label>
+          <input
+            id="username"
+            value={post?.username || ''}
+            readOnly
+            className="p-5 bg-primary mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          />
+        </div>
+        <div>
+          <label htmlFor="img" className="font-semibold text-xl block text-secondary">Image URL:</label>
+          <input
+            id="img"
+            value={post?.img || ''}
+            onChange={(e) => setPost({...post!, img: e.target.value })}
+            className="p-5 bg-primary mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          />
+        </div>
+        <div>
+          <label htmlFor="desc" className="font-semibold text-xl block text-secondary">Description:</label>
+          <textarea
+            id="desc"
+            value={post?.desc || ''}
+            onChange={(e) => setPost({...post!, desc: e.target.value })}
+            className="p-5 bg-primary mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          />
+        </div>
+        <button type="submit" className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          Update Post
+        </button>
       </form>
     </div>
   );
