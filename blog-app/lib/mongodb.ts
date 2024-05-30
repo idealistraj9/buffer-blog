@@ -1,6 +1,6 @@
 // mongodb.ts
 
-import { MongoClient, MongoClientOptions } from 'mongodb';
+import { MongoClient } from 'mongodb';
 
 const uri: string = process.env.MONGODB_URI!;
 const options: any = {
@@ -9,10 +9,10 @@ const options: any = {
 };
 
 let client: MongoClient | undefined;
-let clientPromise: Promise<MongoClient>;
+let clientConnectPromise: Promise<void>; // Adjusted to Promise<void>
 
 declare global {
-  var _mongoClientPromise: Promise<MongoClient> | undefined;
+  var _mongoClientConnectPromise: Promise<void> | undefined; // Adjusted to Promise<void>
 }
 
 if (!process.env.MONGODB_URI) {
@@ -20,14 +20,14 @@ if (!process.env.MONGODB_URI) {
 }
 
 if (process.env.NODE_ENV === 'development') {
-  if (!global._mongoClientPromise) {
-    client = new MongoClient(uri, options); 
-    global._mongoClientPromise = client.connect(); 
+  if (!global._mongoClientConnectPromise) {
+    client = new MongoClient(uri, options);
+    global._mongoClientConnectPromise = client.connect();
   }
-  clientPromise = global._mongoClientPromise!;
+  clientConnectPromise = global._mongoClientConnectPromise!;
 } else {
-  client = new MongoClient(uri, options); 
-  clientPromise = client.connect(); 
+  client = new MongoClient(uri, options);
+  clientConnectPromise = client.connect();
 }
 
-export default clientPromise;
+export default clientConnectPromise;
