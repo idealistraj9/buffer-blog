@@ -11,12 +11,12 @@ export const siteConfig = {
   ],
   navMenuItems: [
     {
-      label: "Profile",
-      href: "/profile",
+      label: "Create New Post",
+      href: "/write/new",
     },
     {
-      label: "Dashboard",
-      href: "/dashboard",
+      label: "My Blogs",
+      href: "/user/blogs",
     },
   ],
   

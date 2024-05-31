@@ -8,6 +8,7 @@ interface Post {
   img: string;
   content: string;
   username: string;
+  desc: string;
 }
 
 const Home = () => {
@@ -45,31 +46,31 @@ const Home = () => {
 
   return (
     <>
-      <div className="gap-2 grid grid-cols-2 sm:grid-cols-5">
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-2 gap-4 p-10 md:px-20 text-black">
         {Array.isArray(post) && post.length > 0 ? (
           post.map((post) => (
-            <Link href={`/posts/${post._id}`} passHref key={post._id} className=' h-[70%] m-0 p-0'>
-              <Card shadow="sm" isPressable className="m-1 w-[100%] h-[100%] ">
-                <CardBody className="overflow-visible p-0">
-                  <Image
-                    shadow="sm"
-                    radius="lg"
-                    width="100%"
-                    alt={post.title}
-                    className="w-full object-cover h-[140px]"
-                    src={post.img}
-                  />
-                </CardBody>
-                <CardFooter className="text-small justify-between">
-                  <b>{post.title}</b>
-                  {/* <p className="text-default-500">{post.desc || "No description available"}</p> */}
-                </CardFooter>
-              </Card>
+            <Link className=""
+              href={`/posts/${post._id}`} passHref key={post._id}>
+              <div className="bg-primary rounded-xl shadow-md overflow-hidden w-full h-full ">
+                <div className="relative">
+                  <img className="w-full h-48 object-cover" src={post.img} />
+                  {/* <div className="absolute top-0 right-0 bg-indigo-500 text-white font-bold px-2 py-1 m-2 rounded-md">New
+                  </div> */}
+                  {/* <div className="absolute bottom-0 right-0 bg-gray-800 text-white px-2 py-1 m-2 rounded-md text-xs">3 min read
+                  </div> */}
+                </div>
+                <div className="flex flex-col p-4 h-[200px] hover:h-[100%] hover:transition-h duration-500 ease-in-out font-bold ">
+                  <div className="text-lg  mb-2">{post.title}</div>
+                  <p className=" text-sm animate-pulse	">{post.desc} </p>
+                </div>
+              </div>
             </Link>
           ))
         ) : (
           <div className="col-span-full text-center py-4">No posts found</div>
         )}
+
       </div>
 
     </>
@@ -77,3 +78,6 @@ const Home = () => {
 };
 
 export default Home;
+
+
+

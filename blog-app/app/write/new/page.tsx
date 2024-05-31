@@ -47,7 +47,7 @@ const NewPost = () => {
   };
 
   return (
-    <div className="w-full mx-auto my-20 ">
+    <div className="w-full mx-auto my-20 pr-5">
       <h1 className="text-4xl font-semibold mb-8">Create New Post</h1>
       {error && <p className="text-red-600 mb-6">{error}</p>}
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -67,7 +67,7 @@ const NewPost = () => {
             id="content"
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            rows={10}
+            rows={50}
             className="p-5 bg-primary mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
           />
         </div>
@@ -92,7 +92,7 @@ const NewPost = () => {
           />
         </div>
         <div>
-          <label htmlFor="desc" className="font-semibold text-xl block text-secondary">Description:</label>
+          <label htmlFor="desc" className="font-semibold text-xl block text-secondary">Short Description:</label>
           <textarea
             id="desc"
             value={desc}

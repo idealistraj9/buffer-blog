@@ -45,12 +45,14 @@ const Post = () => {
   if (!post) return <div className="flex justify-center items-center h-screen">No post found</div>;
 
   return (
-    <div className="flex flex-col overflow-auto h-[750px] p-10 text-primary bg-secondary rounded-lg">
-      <div className="flex flex-col h-full overflow-auto space-y-4">
-        <h1 className="font-bold text-3xl text-center pb-5">{post.title}</h1>
-        <img src={post.img} alt="Post Image" className="w-[100%]  h-full object-cover mx-auto " />
-        <p className="text-lg">{post.content}</p>
-        <p className="text-sm font-medium">Author: {post.username}</p>
+    <div className='h-[90%] shadow-lg overflow-auto scrollbar-thin scrollbar-thumb-rounded-full scrollbar-corner-rounded-full scrollbar-track-rounded-full scrollbar-thumb-background scrollbar-track-primary'>
+      <div className="flex flex-col  p-20 text-secondary bg-primary rounded-lg ">
+        <div className="flex flex-col h-full space-y-4">
+          <h1 className="font-bold text-3xl sm:text-xl text-center pb-5">{post.title}</h1>
+          <img src={post.img} alt="Post Image" className="w-[100%]  h-full object-cover mx-auto " />
+          <p className="text-lg">{post.content}</p>
+          <p className="text-sm font-medium">Author: {post.username}</p>
+        </div>
       </div>
     </div>
   );

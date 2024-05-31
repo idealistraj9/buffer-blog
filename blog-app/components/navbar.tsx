@@ -8,59 +8,15 @@ import {
   NavbarItem,
   NavbarMenuItem,
 } from "@nextui-org/navbar";
-import { Button } from "@nextui-org/button";
-import { Kbd } from "@nextui-org/kbd";
-// import { Link } from "@nextui-org/link";
-import { Input } from "@nextui-org/input";
 import { link as linkStyles } from "@nextui-org/theme";
 import NextLink from "next/link";
 import clsx from "clsx";
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
-import {
-  TwitterIcon,
-  GithubIcon,
-  DiscordIcon,
-  HeartFilledIcon,
-  SearchIcon,
-  Logo,
-} from "@/components/icons";
-import { PlaceholdersAndVanishInput } from "./placeholders-and-vanish-input";
 import { SignedOut, SignInButton, SignedIn, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 
-const placeholders = [
-  "What is an operating system?",
-  "Define RAM and ROM.",
-  "Where is Andrew Laeddis Hiding?",
-  "What is cloud computing?",
-  "Why use open-source software?",
-];
-
-const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  console.log(e.target.value);
-};
-const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
-  console.log("submitted");
-};
-
 export const Navbar = () => {
-  const searchInput = (
-    <Input
-      aria-label="Search"
-      classNames={{
-        inputWrapper: "bg-default",
-        input: "text-sm",
-      }}
-      labelPlacement="outside"
-      placeholder="Search..."
-      startContent={
-        <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
-      }
-      type="search"
-    />
-  );
 
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
@@ -71,14 +27,16 @@ export const Navbar = () => {
             <p className="text-[23px] font-extralight text-black">Buffer</p>
           </NextLink>
         </NavbarBrand>
-        <SignedOut>
-          <SignInButton />
-        </SignedOut>
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
-        <Link href="/write/new" className="text-secondary">Create New Post</Link>
-        <Link href="/user/blogs" className="text-secondary">My Blogs</Link>
+        <div className="hidden lg:inline-block md:inline-block">
+          <SignedOut>
+            <SignInButton />
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+        </div>
+        <Link href="/write/new" className="text-secondary hidden lg:inline-block md:inline-block">Create New Post</Link>
+        <Link href="/user/blogs" className="text-secondary hidden lg:inline-block md:inline-block">My Blogs</Link>
         <ul className="hidden lg:flex gap-4 justify-start ml-2 ">
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href} className="">
@@ -104,11 +62,6 @@ export const Navbar = () => {
         <NavbarItem className="hidden sm:flex gap-2 bg-transparent text-black p-2 rounded-xl" >
           <ThemeSwitch />
         </NavbarItem>
-        <NavbarItem className="hidden lg:flex"><PlaceholdersAndVanishInput
-          placeholders={placeholders}
-          onChange={handleChange}
-          onSubmit={onSubmit}
-        /></NavbarItem>
         <NavbarItem className="hidden md:flex">
         </NavbarItem>
       </NavbarContent>
@@ -119,26 +72,26 @@ export const Navbar = () => {
       </NavbarContent>
 
       <NavbarMenu>
-        {searchInput}
-        <div className="mx-4 mt-2 flex flex-col gap-2 ">
+        <div className="pl-5">
+          <SignedOut>
+            <SignInButton />
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+        </div>
+        <div className="mx-4 mt-2 flex flex-col gap-2 text-secondary">
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
-            <Link
-              color={
-                index === 2
-                 ? "primary"
-                  : index === siteConfig.navMenuItems.length - 1
-                   ? "danger"
-                    : "secondary"
-              }
-              href="#"
-            >
-              <span className="text-lg"> 
-                {item.label}
-              </span>
-            </Link>
-          </NavbarMenuItem>
-            
+              <Link
+                href="#"
+              >
+                <span className="text-lg">
+                  {item.label}
+                </span>
+              </Link>
+            </NavbarMenuItem>
+
           ))}
         </div>
       </NavbarMenu>

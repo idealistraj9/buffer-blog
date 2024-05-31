@@ -9,6 +9,7 @@ interface Post {
   img: string;
   content: string;
   username: string;
+  desc: string;
 }
 
 const UserBlogs = () => {
@@ -51,27 +52,36 @@ const UserBlogs = () => {
   }
 
   return (
-    <div className="container mx-auto px-4">
-      <h1 className="text-2xl font-bold mt-8 mb-4">My Blogs</h1>
-      <ul>
-        {Array.isArray(post) && post.length > 0 ? (
-          post.map(post => (
-            <li key={post._id} className="mb-4 bg-secondary p-5 rounded-lg text-lg">
-              <Link href={`/write/${post._id}`}>
-                {post.title}
-              </Link>
-              <button
-                onClick={() => handleDelete(post._id)}
-                className="ml-2 bg-primary text-white px-2 py-1 rounded"
-              >
-                Delete
-              </button>
-            </li>
-          ))
-        ) : (
-          <li className="text-gray-500">No posts found</li>
-        )}
-      </ul>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-2 gap-4 p-10 md:px-20 text-black overflow-auto h-full">
+      {Array.isArray(post) && post.length > 0 ? (
+        post.map((post) => (
+          <div className='w-full h-full'>
+            <Link className=""
+              href={`/posts/${post._id}`} passHref key={post._id}>
+              <div className="bg-primary rounded-xl shadow-md overflow-hidden w-full ">
+                <div className="relative">
+                  <img className="w-full h-48 object-cover" src={post.img} />
+                </div>
+                <div className="flex flex-col p-4 h-[200px] font-bold ">
+                  <div className="text-lg  mb-2">{post.title}<br /></div>
+                  <p className=" text-sm animate-pulse	">{post.desc} </p>
+                </div>
+              </div>
+            </Link>
+
+            <button
+              onClick={() => handleDelete(post._id)}
+              className="ml-2 pb-2 bg-secondary text-sm m-5 text-white px-2 py-1 rounded "
+            >
+              Delete
+            </button>
+          </div>
+
+        ))
+      ) : (
+        <div className="col-span-full text-center py-4">No posts found</div>
+      )}
+
     </div>
   );
 

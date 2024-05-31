@@ -28,21 +28,22 @@ module.exports = {
       themes: {
         light: {
           colors: {
-            primary: "#FFD34E",
-            secondary: "#EE457E",
-            background: "#F4E8D1",
-          },
+            primary: "#FAF6EB",
+            secondary: "#0D0D0D",
+            background:"#F4E8D1"
+          }
         },
         dark: {
           colors: {
-            primary: "#FFD34E",
-            secondary: "#EE457E",
-            background: "#E1CA9E",
-          },
+            primary: "#C2AF89",
+            secondary: "#323232",
+            background: "#E1CA9E"
+          }
         },
       },
     }),
     addVariablesForColors,
+    require('tailwind-scrollbar'),
   ],
 };
 // This plugin adds each Tailwind color as a global CSS variable, e.g. var(--gray-200).

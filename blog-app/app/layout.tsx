@@ -43,6 +43,8 @@ export default function RootLayout({
 
 
     <html suppressHydrationWarning lang="en">
+      <title>Buffer</title>
+      <link rel="icon" href="/favicon.png" sizes="any" />
       <head />
       <body
         className={clsx(
