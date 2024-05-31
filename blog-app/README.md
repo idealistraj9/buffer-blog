@@ -9,8 +9,10 @@
 - [Framer Motion](https://www.framer.com/motion/)
 - [next-themes](https://github.com/pacocoursey/next-themes)
 
-## How to Use
+## Hosted on vercal
+https://buffer-blog-69jdh9xhv-idealistraj9s-projects.vercel.app/
 
+## How to Use
 
 ```bash
 git clone https://github.com/idealistraj9/buffer-blog.git
