@@ -17,7 +17,7 @@ https://buffer-blog-69jdh9xhv-idealistraj9s-projects.vercel.app/
 ```bash
 git clone https://github.com/idealistraj9/buffer-blog.git
 ```
-
+### navigate to root directory blog-app
 ### Install dependencies
 
 You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:

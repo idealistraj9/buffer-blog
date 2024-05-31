@@ -84,7 +84,7 @@ export const Navbar = () => {
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
               <Link
-                href="#"
+                href={item.href}
               >
                 <span className="text-lg">
                   {item.label}

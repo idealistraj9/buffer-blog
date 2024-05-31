@@ -15,11 +15,10 @@ export default function Home() {
         <h1 className={"text-[700%] text-pink-500"}>Buffer&nbsp;</h1>
         <span className="text-[300%] "> Where Ideas Flow 💡</span><br />
       </div>
-      <div className="flex items-center justify-center rounded-2xl w-screen m-0 p-0">
+      <div className=" items-center justify-center rounded-2xl hidden lg:inline-block md:inline-block ">
         <TextRevealCard
           text=      "Reading is passport to countless worlds."
           revealText="While writing is compass guiding the journey. "
-          
         >
         </TextRevealCard>
       </div>
