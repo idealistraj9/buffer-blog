@@ -10,7 +10,7 @@
 - [next-themes](https://github.com/pacocoursey/next-themes)
 
 ## Hosted on vercal
-https://buffer-blog-69jdh9xhv-idealistraj9s-projects.vercel.app/
+https://buffer-blog-7kaakfojw-idealistraj9s-projects.vercel.app/
 
 ## How to Use
 
